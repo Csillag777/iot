@@ -1,0 +1,56 @@
+int trigPin = 12;                  //Trig Pin
+int echoPin = 11;                  //Echo Pin
+long duration, cm, inches;
+int a,f;
+int ans,in,out;
+ 
+void setup() {
+  Serial.begin (9600);             // Serial Port begin
+  pinMode(trigPin, OUTPUT);        // 定義輸入及輸出 
+  pinMode(echoPin, INPUT);
+  pinMode(5, OUTPUT);
+}
+ 
+void loop()
+{
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(5);
+  digitalWrite(trigPin, HIGH);     // 給 Trig 高電位，持續 10微秒
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  pinMode(echoPin, INPUT);             // 讀取 echo 的電位
+  duration = pulseIn(echoPin, HIGH);   // 收到高電位時的時間
+ 
+  cm = (duration/2) / 29.1;         // 將時間換算成距離 cm 或 inch  
+  inches = (duration/2) / 74; 
+  if(cm < 100 & f > 100){
+  ans = a-cm;
+  Serial.println(ans);
+  Serial.print(cm);
+  Serial.println("cm");
+  Serial.println();
+  f = 0;
+  if (ans > 0){
+    in = in + 1;
+    out = 0;
+    }
+  else{out = out + 1;in=0;}
+  if (in == 3){
+    Serial.println("in +1");
+    digitalWrite(5, HIGH);     // 給 Trig 高電位，持續 10微秒
+    delay(1000);
+    digitalWrite(5, LOW);
+    in = 0;
+    out = 0;}
+  if (out == 3){
+    Serial.println("out +1");
+    digitalWrite(5, HIGH);     // 給 Trig 高電位，持續 10微秒
+    delay(2000);
+    digitalWrite(5, LOW);
+    in = 0;
+    out = 0;}
+  delay(1000);
+  a = cm;}
+  else{f = cm;}
+}
